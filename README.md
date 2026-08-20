@@ -185,3 +185,9 @@ CART_ITEM의 칼럼 (장바구니에 담긴 실제 상품과 선택 옵션)
 옵션 변경
 비회원 → 로그인 전환
 로그인 후 기존 장바구니 유지
+
+260820 com.ohouse.shopping 패키지 쪽추가
+
+우리 dispathcerServlet 확인
+
+http://localhost:8080/ohPro/store/category.htm 로 연결
