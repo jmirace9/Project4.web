@@ -25,7 +25,7 @@ public class CategoryHandler implements CommandHandler {
 			conn = ConnectionProvider.getConnection();
 			
 			CategoryDAO dao = new CategoryDAOImple();
-			CategoryService service = new CategoryService();
+			CategoryService service = new CategoryService(dao);
 			
 			// DB 준비되면 실제 조회
 			// List<CategoryDTO> mainCategories = service.getMainCategories(conn);

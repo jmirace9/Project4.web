@@ -1,193 +1,104 @@
-# 오늘의집 프로젝트 - 상품 상세/API 및 DB 모델링 검증 메모
+## 디스패쳐 분석
+- urlMappingPath=this.getInitParameter("urlMappingPath") -> web.xml의 init-param/param-name(urlMappingPath),param-value(/WEB-INF/commandHandler.properties)
+ ㄴ commandHandler.properties 파일을 읽어서 요청url과 handler의 관계를 정의한다.
 
-내 프로젝트 정보 정리
+- realPath = this.getServletContext().getRealPath(urlMappingPath);
+ ㄴ properties파일의 컴퓨터에서의 실제 물리 경로 ( C:/.../.../ohPro/src/main/webapp/WEB-INF/views/commandHandler.properties)
 
-## 1. 검증 대상
+- Properties p = new Properties();
+try(FileReader reader = new FileReader(realPath) ){
+    p.load(reader)      // java.properties의 load함수 
+}                       
+// realPath(실제 properties파일의 위치)를 담은 FileReader의 reader변수를 Properties 변수 p에 properties함수 load실행할때 매개변수로 담는다 (고로, Reader를 통해 properties 형식의 텍스트를 읽어서 Properties 객체 안에 key-value 형태로 저장한다.)
 
-### 상품 상세 페이지
-- https://store.ohou.se/goods/329364?affect_type=ProductCategoryIndex
+// Properties p -> commandHandlerMap 저장
+		Set<Entry<Object, Object>> set =  p.entrySet();
+		Iterator<Entry<Object, Object>> ir = set.iterator();
+		
+		while (ir.hasNext()) {
+         Entry<Object, Object> entry = ir.next();
+         String url = (String) entry.getKey();
+         String fullName = (String) entry.getValue();
 
-### 상품 옵션 API
-- https://store.ohou.se/api/goods/options?id=329364
+- Class<?> commandHandlerClass = class.forName(fullName);
 
-> 기준 상품: 상품 상세 페이지에서 실제 옵션 선택 및 장바구니 동작을 확인한 상품
+### 260820 
+category.jsp 활용중
 
----
+com.ohouse.common.jdbc 추가
+    ㄴ JdbcUtil.java
 
-# 2. 상품 상세 페이지에서 확인한 기능
-
-상품 상세 페이지에서 다음과 같은 정보 및 interaction을 확인했다.
-
-### 상품 기본 정보
-- 상품 ID
-- 상품명
-- 브랜드
-- 가격
-- 할인율
-- 리뷰 정보
-- 배송비
-- 배송 정보
-- 상품 이미지
-- 상품 상세 정보
-
-### 상품 옵션
-상품마다 옵션의 종류와 개수가 다를 수 있음.
-
-예:
-- 사이즈
-- 색상
-- 구성
-- 추가 구매상품 등
-
-따라서 `PRODUCT` 테이블에
-
-```text
-size
-color
-material
-configuration 등을 직접 컬럼으로 계속 추가하는 방식은 적절하지 않음.
-
-## 상품 테이블 예시
-production
-├─ id
-├─ name
-├─ image
-├─ user
-├─ brand
-├─ delivery
-├─ firstDepthName  -> 사이즈 (1차옵션)
-├─ secondDepthName -> 색상   (2차옵션)
-├─ options[]
-└─ extraOptions[]
-
-상품마다 (1차옵션)(2차옵션) 구조가 달라질 수 있음.
-
-옵션 조합마다 자체 고유ID가 존재함
-PRODUCT
-   │
-   └── PRODUCT_OPTION
-          ├─ option_id
-          ├─ product_id
-          ├─ price
-          └─ stock
-
-옵션 밑의 추가구매 (별도상품)
-extraOptions
-
-CART
-----------------------
-cart_id       PK
-user_id       FK NULL
-guest_token   NULL
-created_at
-updated_at
-
-회원일때
-user_id = 회원 ID
-guest_token = NULL
-
-비회원일때 
-user_id = NULL
-guest_token = 비회원 식별값
-
-- 장바구니와 상품 옵션 관계
-CART
- │
- │ 1:N
- ▼
-CART_ITEM
- │
- ├──────── PRODUCT
- │
- └──────── PRODUCT_OPTION
-
-- 장바구니 예시
- CART
-│
-└── CART_ITEM
-      ├─ cart_id
-      ├─ product_id
-      ├─ option_id
-      └─ quantity
-
--- DB ERD확장
-PRODUCT
-   │
-   ├──────── PRODUCT_IMAGE
-   │
-   └──────── PRODUCT_OPTION
-                  │
-                  ├─ 옵션 조합
-                  ├─ 가격
-                  └─ 재고
-
-
-USER
- │
- ▼
-CART
- │
- ▼
-CART_ITEM
- │
- ├──────── PRODUCT
- │
- └──────── PRODUCT_OPTION
-
-product의 컬럼
-product_id       PK
-category_id      FK
-brand_id         FK
-product_name
-price
-discount_rate
-description
-...
-
-product_option의 컬럼
-option_id        PK
-product_id       FK
-option_value1
-option_value2
-price
-stock
-...
-예)
-option_id | product_id | option_value1 | option_value2 | price | stock
-----------------------------------------------------------------------
-5010392   | 329364     | S             | 그레이         | ...   | ...
-5010393   | 329364     | S             | 아이보리       | ...   | ...
-5010394   | 329364     | SS            | 그레이         | ...   | ...
-
-option_value1, option_value2는 교육 프로젝트에서 단순화한 설계안.
-실제 서비스 수준에서는 OPTION_GROUP / OPTION_VALUE / SKU(상품 옵션 조합) 구조로 더 정규화할 수 있음.
-
-CART의 칼럼 (회원/비회원의 장바구니를 관리)
-cart_id PK
-user_id FK / NULL
-guest_token (방문 비회원에게 고유식별값 주고 브라우저에 쿠키로저장)
-    ㄴ 예) String guestToken = UUID.randomUUID().toString(); // JAVA 코딩
-created_at 장바구니 생성시간
-updated_at 장바구니 최종 변경시간
-
-CART_ITEM의 칼럼 (장바구니에 담긴 실제 상품과 선택 옵션)
-1. cart_item_id
-2. cart_id
-3. product_id
-4. option_id
-5. quantity (수량)
-
-## 추가 검증 해볼만한것
-# 장바구니
-같은 상품의 다른 옵션을 각각 담았을 때
-같은 옵션을 다시 담았을 때
-수량 변경
-옵션 변경
-비회원 → 로그인 전환
-로그인 후 기존 장바구니 유지
-
-260820 com.ohouse.shopping 패키지 쪽추가
+com.ohouse.shopping 패키지 쪽추가
+com.ohouse.shopping.command -> CategoryHandler
+com.ohouse.shopping.dao -> CategoryDAO,CategoryDAOImple
+com.ohouse.shopping.dto -> CategoryDTO
+com.ohouse.shopping.service -> CategoryService
 
 우리 dispathcerServlet 확인
 
 http://localhost:8080/ohPro/store/category.htm 로 연결
+
+CategoryHandler
+       ↓
+CategoryService
+       ↓
+CategoryDAO ← interface
+       ↓
+CategoryDAOImpl
+
+boardPro 그림으로 요청(한눈에 구조파악)
+
+프로젝트때 맡은 파트를 다른 css등 코딩없는 빈 jsp에서 하고 옮겨보기
+    ㄴ 프로젝트의 큰구조와 내가맡은 구조 정확히 먼저 파악하기
+    ㄴ 확장성 좋은 코딩,유지보수 용이, 약한 결합 코딩, 하드코딩x  
+
+### 260821
+
+대분류 [가구] 중분류 [침대]
+소분류 [침대프레임] = https://ohou.se/store/category?category_id=10120001
+소분류 [침대+매트리스] = https://ohou.se/store/category?category_id=10120002
+소분류 [침대부속가구] = https://ohou.se/store/category?category_id=10120003
+
+대분류 [가구] 중분류 [매트리스/토퍼]
+소분류 [매트리스] = https://ohou.se/store/category?category_id=10130001
+소분류 [토퍼] = https://ohou.se/store/category?category_id=10130002
+
+대분류 [가구] 중분류 [테이블/식탁/책상]
+소분류 [거실/소파테이블] = https://ohou.se/store/category?category_id=10150001
+소분류 [사이드테이블] = https://ohou.se/store/category?category_id=10150002
+소분류 [식탁] = https://ohou.se/store/category?category_id=10150003
+-------------------------------------------------------------------------------------------
+대분류 [주방용품] 중분류 [그릇/식기]
+소분류 [홈세트] = https://ohou.se/store/category?category_id=16220001
+소분류 [공기/대접] = https://ohou.se/store/category?category_id=16220002
+소분류 [접시/플레이트] = https://ohou.se/store/category?category_id=16220003
+
+대분류 [주방용품] 중분류 [냄비/프라이팬/솥]
+소분류 [냄비/프라이팬세트] = https://ohou.se/store/category?category_id=16230001
+소분류 [냄비/뚝배기] = https://ohou.se/store/category?category_id=16230002
+소분류 [압력솥/찜솥] = https://ohou.se/store/category?category_id=16230003
+
+대분류 [주방용품] 중분류 [컵/잔/텀블러]
+소분류 [머그컵] = https://ohou.se/store/category?category_id=16240001
+소분류 [유리컵/물컵] = https://ohou.se/store/category?category_id=16240002
+소분류 [텀블러/빨대/컵소품] = https://ohou.se/store/category?category_id=16240003
+-------------------------------------------------------------------------------------------
+대분류 [수납/정리] 중분류 [서랍장/트롤리]
+소분류 [플라스틱서랍장] = https://ohou.se/store/category?category_id=13050002
+소분류 [트롤리/이동식선반] = https://ohou.se/store/category?category_id=13050003
+소분류 [공간박스] = https://ohou.se/store/category?category_id=13050004
+
+대분류 [수납/정리] 중분류 [리빙박스/수납함]
+소분류 [수납박스/리빙박스] = https://ohou.se/store/category?category_id=13140006
+소분류 [팬트정리함] = https://ohou.se/store/category?category_id=13140007
+소분류 [약/구급정리함] = https://ohou.se/store/category?category_id=13140008
+
+대분류 [수납/정리] 중분류 [행거]
+소분류 [스탠드행거] = https://ohou.se/store/category?category_id=13020002
+소분류 [이동식행거] = https://ohou.se/store/category?category_id=13020003
+소분류 [고정식행거] = https://ohou.se/store/category?category_id=13020004
+
+- jquery스크립트 header에 추가
+
+
+

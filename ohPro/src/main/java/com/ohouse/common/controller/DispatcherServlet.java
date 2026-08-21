@@ -58,9 +58,11 @@ public class DispatcherServlet extends HttpServlet {
          // fullName 문자열 -> 생성된 커맨드 객체
          try {
             Class<?> commmandHandlerClass = Class.forName(fullName);
+            
             CommandHandler handler = (CommandHandler) commmandHandlerClass
                                        .getDeclaredConstructor()
                                        .newInstance();
+            
             commandHandlerMap.put(url, handler);
          } catch (Exception e) { 
             e.printStackTrace();

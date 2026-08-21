@@ -88,12 +88,26 @@
     
     <!-- 좌측 사이드바 -->
     <aside class="sidebar">
-        <h2 class="sidebar-title">가구</h2>
+        <h2 class="sidebar-selected">가구</h2>
         <div class="sidebar-menu">
             <div class="sidebar-item">오늘의집 Only</div>
-            <div class="sidebar-item active">침대 <span class="sidebar-arrow">∨</span></div>
+            <div class="sidebar-item">침대 <span class="sidebar-arrow">∨</span></div>
+            	<div class="sidebar-submenu">
+	            	<a href="#" class="subcategory" data-category-id="101">침대 프레임</a><br>
+				    <a href="#" class="subcategory" data-category-id="102">침대+매트리스</a><br>
+				    <a href="#" class="subcategory" data-category-id="103">침대부속가구</a><br>
+            	</div>
             <div class="sidebar-item">매트리스·토퍼 <span class="sidebar-arrow">∨</span></div>
+            	<div class="sidebar-submenu">
+	            	<a href="#" class="subcategory" data-category-id="104">매트리스</a><br>
+				    <a href="#" class="subcategory" data-category-id="105">토퍼</a><br>				    
+            	</div>
             <div class="sidebar-item">테이블·식탁·책상 <span class="sidebar-arrow">∨</span></div>
+            	<div class="sidebar-submenu">
+	            	<a href="#" class="subcategory" data-category-id="106">거실/소파테이블</a><br>
+				    <a href="#" class="subcategory" data-category-id="107">사이드테이블</a><br>
+				    <a href="#" class="subcategory" data-category-id="108">식탁</a><br>
+            	</div>
             <div class="sidebar-item">소파 <span class="sidebar-arrow">∨</span></div>
             <div class="sidebar-item">서랍·수납장 <span class="sidebar-arrow">∨</span></div>
             <div class="sidebar-item">거실장·TV장 <span class="sidebar-arrow">∨</span></div>
@@ -108,25 +122,42 @@
             <div class="sidebar-item">가벽.파티션 <span class="sidebar-arrow">∨</span></div>
             <div class="sidebar-item">공간별가구 <span class="sidebar-arrow">∨</span></div>
         </div>
+        
+        <style>
+        .sidebar-submenu {
+			    display: none;
+			    padding: 5px 0 5px 15px;
+			    font-size: 15px;
+			    color: #757575;
+			}
+        </style>
 
-        <div class="other-categories">
-            <div class="other-item">폭염대비</div>
-            <div class="other-item">패브릭</div>
-            <div class="other-item">가전·디지털</div>
-            <div class="other-item">주방용품</div>
-            <div class="other-item">식품</div>
-            <div class="other-item">수납·정리</div>
-            <div class="other-item">생활용품</div>
-            <div class="other-item">생필품</div>
-            <div class="other-item">유아.아동</div>
-            <div class="other-item">반려동물</div>
-            <div class="other-item">캠핑.레저</div>
-            <div class="other-item">공구.DIY</div>
-            <div class="other-item">인테리어시공</div>
-            <div class="other-item">렌탈.구독</div>
-            <div class="other-item">장보기</div>
+    <!-- 좌측 사이드바 접기/열기 -->
+    <script>
+    	$(".sidebar-item").click( function () {
+			$(this).next(".sidebar-submenu").slideToggle();
+		});
+    </script>
+    
+        <div class="sidebar-notselected">
+            <div class="sidebar-other">폭염대비</div>
+            <div class="sidebar-other">패브릭</div>
+            <div class="sidebar-other">가전·디지털</div>
+            <div class="sidebar-other">주방용품</div>
+            <div class="sidebar-other">식품</div>
+            <div class="sidebar-other">수납·정리</div>
+            <div class="sidebar-other">생활용품</div>
+            <div class="sidebar-other">생필품</div>
+            <div class="sidebar-other">유아.아동</div>
+            <div class="sidebar-other">반려동물</div>
+            <div class="sidebar-other">캠핑.레저</div>
+            <div class="sidebar-other">공구.DIY</div>
+            <div class="sidebar-other">인테리어시공</div>
+            <div class="sidebar-other">렌탈.구독</div>
+            <div class="sidebar-other">장보기</div>
         </div>
     </aside>
+    
 
     <!-- 우측 메인 컨텐츠 -->
     <div class="main-content">
