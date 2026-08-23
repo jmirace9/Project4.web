@@ -18,7 +18,39 @@ public class CategoryHandler implements CommandHandler {
 	
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		// service 호출후 카테고리 데이터 받기
+
+		System.out.println("===== CategoryHandler.process() 실행 =====");
+		
+		String categoryId = request.getParameter("category_id");
+		String mainCategoryId = "10000000"; // 카테고리 첫화면 기본대분류(가구)
+		
+		if ( categoryId != null && !categoryId.isEmpty()) {
+			 if (categoryId.equals("10000000")) {
+			        mainCategoryId = "10000000";
+
+			    } else if (categoryId.equals("16000000")) {
+			        mainCategoryId = "16000000";
+
+			    } else if (categoryId.equals("13000000")) {
+			        mainCategoryId = "13000000";
+
+			    } else if (categoryId.startsWith("101")) {
+			        mainCategoryId = "10000000";
+
+			    } else if (categoryId.startsWith("162")) {
+			        mainCategoryId = "16000000";
+
+			    } else if (categoryId.startsWith("13")) {
+			        mainCategoryId = "13000000";
+			    }
+		}// if
+		
+		System.out.println("categoryId = " + categoryId);
+		System.out.println("mainCategoryId = " + mainCategoryId);
+		
+		request.setAttribute("selectedCategoryId", categoryId);
+		request.setAttribute("mainCategoryId", mainCategoryId);
+		
 		Connection conn = null;
 		
 		try {
@@ -35,6 +67,6 @@ public class CategoryHandler implements CommandHandler {
 		} // try-finally
 	
 		return "/WEB-INF/views/store/category.jsp";
-	}
+	} // process
 	
 } // class

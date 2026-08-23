@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <style>
     /* 푸터 영역 스타일 */
     .footer-wrapper { background-color: #F7F9FA; padding: 40px 0; border-top: 1px solid #EAEDEF; }

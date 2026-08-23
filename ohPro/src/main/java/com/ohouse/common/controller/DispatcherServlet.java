@@ -64,6 +64,8 @@ public class DispatcherServlet extends HttpServlet {
                                        .newInstance();
             
             commandHandlerMap.put(url, handler);
+            System.out.println("등록 URL : " + url);
+            System.out.println("등록 Handler : " + handler.getClass().getName()); // 임시2줄
          } catch (Exception e) { 
             e.printStackTrace();
          }
@@ -74,6 +76,7 @@ public class DispatcherServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// 1. 요청URL 분석 
 		String requestURI = request.getRequestURI();
 		System.out.println("! requestURI: " + requestURI);
@@ -83,6 +86,12 @@ public class DispatcherServlet extends HttpServlet {
 		
 		// 2. 요청을 처리할 핸들러 객체를 map 으로부터 얻어오기
 		CommandHandler handler = this.commandHandlerMap.get(path);
+		
+		System.out.println("path = " + path);
+		System.out.println("handler = " + handler);
+		System.out.println("handler class = "
+		        + (handler == null ? "null" : handler.getClass().getName())); // 임시출력
+		
 		
 		if(handler == null) {
 			handler = new NullHandler();
