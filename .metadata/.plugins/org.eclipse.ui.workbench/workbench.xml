@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="8" version="2.0">
+<workbench progressCount="15" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="52" y="52">
 <fastViewData fastViewLocation="1024"/>
@@ -30,8 +30,8 @@
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="ohouse(멤버,카트,카트아이템).exerd" partName="ohouse(멤버,카트,카트아이템).exerd" title="ohouse(멤버,카트,카트아이템).exerd" tooltip="C:\Class\Project\프로젝트4(web)오늘의집\ohouse(멤버,카트,카트아이템).exerd" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/C:/Class/Project/프로젝트4(web)오늘의집/ohouse(멤버,카트,카트아이템).exerd"/>
+<editor activePart="true" focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="ohouse.exerd" partName="ohouse.exerd" title="ohouse.exerd" tooltip="C:\Class\Project\프로젝트4(web)오늘의집\ohouse.exerd" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/C:/Class/Project/프로젝트4(web)오늘의집/ohouse.exerd"/>
 </editor>
 </editors>
 <views>
@@ -49,7 +49,9 @@
 <view id="com.tomato.exerd.modelview3.ModelView3" partName="모델">
 <viewState/>
 </view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="콘솔"/>
+<view id="org.eclipse.ui.console.ConsoleView" partName="콘솔">
+<viewState/>
+</view>
 <view id="com.tomato.exerd.ui.views.domain" partName="도메인">
 <viewState/>
 </view>
@@ -131,7 +133,7 @@
 </folder>
 </info>
 <info folder="true" part="bottomFolder" ratio="0.6996904" ratioLeft="452" ratioRight="194" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="com.tomato.exerd.ui.views.domain" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="com.tomato.exerd.ui.views.domain" label="도메인"/>
 <page content="com.tomato.exerd.validate.ui.ValidateView" label="검토"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="콘솔"/>
@@ -159,8 +161,10 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" uri="file:/C:/Class/Project/프로젝트4(web)오늘의집/ohouse(멤버,카트,카트아이템).exerd"/>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" uri="file:/C:/Class/Project/프로젝트4(web)오늘의집/ohouse.exerd"/>
 </editors>
-<item active="true" historyLabel="ohouse(멤버,카트,카트아이템).exerd" index="0"/>
+<item historyLabel="ohouse(멤버,카트,카트아이템).exerd" index="0"/>
+<item active="true" historyLabel="ohouse.exerd" index="1"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
@@ -178,6 +182,9 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" name="ohouse.exerd" tooltip="C:\Class\Project\프로젝트4(web)오늘의집\ohouse.exerd">
+<persistable uri="file:/C:/Class/Project/프로젝트4(web)오늘의집/ohouse.exerd"/>
+</file>
 <file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" name="ohouse(멤버,카트,카트아이템).exerd" tooltip="C:\Class\Project\프로젝트4(web)오늘의집\ohouse(멤버,카트,카트아이템).exerd">
 <persistable uri="file:/C:/Class/Project/프로젝트4(web)오늘의집/ohouse(멤버,카트,카트아이템).exerd"/>
 </file>

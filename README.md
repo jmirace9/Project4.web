@@ -1,3 +1,5 @@
+http://localhost:8080/ohPro/store/category.htm 로 연결
+
 ## 디스패쳐 분석
 - urlMappingPath=this.getInitParameter("urlMappingPath") -> web.xml의 init-param/param-name(urlMappingPath),param-value(/WEB-INF/commandHandler.properties)
  ㄴ commandHandler.properties 파일을 읽어서 요청url과 handler의 관계를 정의한다.
@@ -35,8 +37,6 @@ com.ohouse.shopping.dto -> CategoryDTO
 com.ohouse.shopping.service -> CategoryService
 
 우리 dispathcerServlet 확인
-
-http://localhost:8080/ohPro/store/category.htm 로 연결
 
 CategoryHandler
        ↓
@@ -110,3 +110,34 @@ boardPro 그림으로 요청(한눈에 구조파악)
 고로, 중분류를 눌를때 소분류옵션이 닫혀있었으면 중분류 옵션이 뿌려질 페이지가 뜨며 열리고 다시눌렀을땐 소분류옵션이 닫히지않고 해당중분류 페이지만 새로고침된다. 열리고나면 화살표 눌렀을때만 다시 소분류옵션을 닫을 수 있다.
     + 중분류, 소분류 포커스
 - 처리 완료.
+
+### 260825
+
+DB 오기전 가능한 작업
+
+Body HTML/CSS 골격 잡기,
+우측 Body의 상품 카드 모양과 배치부터 잡아놓기
+
+DAO/Service 상품 조회까지 연결
+
+------------------------------------------
+header.jsp CSS수정
+category.jsp CSS수정
+
+FK관계에 맞게 insert순서 준비된 DBdump.txt
+
+화면에 뿌려질 정보중 상품상세이미지아래에 별점,리뷰 가있는데 아직 테이블없음.
+
+기존 ohouse(멤버,카트,카트아이템).exerd -> 멤버,쿠폰,카트 추가
+
+상세 보기 페이지에서 가구 > 침대 > 침대프레임 이 각개 분류 이름이라 클릭하면 각 분류로 이동하는 링크설정
+ <div class="breadcrumb">
+        <c:forEach var="category" items="${pdto.categoryDTOList}" varStatus="s">
+            <button class="link-category" data-category_id="${category.category_id}">
+                <span>${category.category_name}</span>
+            </button>
+            <c:if test="${!s.last}">
+                <span>›</span>
+            </c:if>
+        </c:forEach>
+    </div>
