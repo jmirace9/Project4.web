@@ -1,4 +1,59 @@
 http://localhost:8080/ohPro/store/category.htm 로 연결
+http://localhost:8080/ohPro/store/productDetail.htm?product_id=3898584
+
+--------------------------
+## 현시점까지 진행한것.
+
+[카테고리 페이지]
+      ↓
+[상품 목록]
+      ↓
+[상품 상세]
+      ↓
+[상품 옵션]
+      ↓
+[옵션 조합 조회]
+      ↓
+[가격/재고 확인]
+--------------------------
+사용자 요청
+   ↓
+DispatcherServlet
+   ↓
+Handler
+   ↓
+Service
+   ↓
+DAO(interface)
+   ↓
+DAOImple
+   ↓
+Oracle
+   ↓
+DTO
+   ↓
+Service
+   ↓
+Handler
+   ↓
+JSP / JSON
+-----------------------
+Oracle 계층형 쿼리를 활용하여 선택 카테고리와 하위 카테고리에 속한 상품을 통합 조회
+
+상품 카테고리 및 상품 조회
+Oracle 계층형 쿼리 START WITH / CONNECT BY를 활용한 카테고리 하위 상품 조회
+상품/브랜드 테이블 JOIN을 통한 상품 기본정보 및 브랜드명 조회
+상품 이미지 정보를 별도 DAO로 분리하여 대표/상세 이미지 구성
+상품 상세
+ProductDetailDTO를 활용하여 상품 기본정보, 이미지, 카테고리, 옵션 데이터를 통합 전달
+DAO / DAOImple 분리를 통한 DB 접근 로직 캡슐화
+Service 계층에서 복수 DAO 조회를 조합하여 상세페이지 데이터 구성
+상품 옵션
+옵션 그룹 / 옵션값을 분리 조회
+ProductOption을 통해 실제 판매 가능한 옵션 조합과 가격/재고 조회
+옵션 선택에 따른 AJAX 기반 실시간 상품 옵션 조회 구현
+
+이런 식으로 "무엇을 만들었는가"보다 "어떤 기술적 문제를 어떻게 해결했는가"가 보이게 만들 수 있어.
 
 ## 디스패쳐 분석
 - urlMappingPath=this.getInitParameter("urlMappingPath") -> web.xml의 init-param/param-name(urlMappingPath),param-value(/WEB-INF/commandHandler.properties)
@@ -130,6 +185,14 @@ FK관계에 맞게 insert순서 준비된 DBdump.txt
 
 기존 ohouse(멤버,카트,카트아이템).exerd -> 멤버,쿠폰,카트 추가
 
+
+### 260825
+패키지 폴더, 파일명 통일.
+
+
+
+해야되는것 : product_detail.jsp의 프론트 db연결
+
 상세 보기 페이지에서 가구 > 침대 > 침대프레임 이 각개 분류 이름이라 클릭하면 각 분류로 이동하는 링크설정
  <div class="breadcrumb">
         <c:forEach var="category" items="${pdto.categoryDTOList}" varStatus="s">
@@ -141,3 +204,10 @@ FK관계에 맞게 insert순서 준비된 DBdump.txt
             </c:if>
         </c:forEach>
     </div>
+
+    <!-- 브레드크럼 (경로) -->
+    <div class="breadcrumb">
+        가구 <span class="arrow">❯</span> 침대 <span class="arrow">❯</span> 침대프레임
+    </div>
+
+추가옵션 중복 메세지 오류 등 처리중.
