@@ -1,5 +1,5 @@
-<%@page import="com.util.conn.ConnectionProvider"%>
-<%@page import="com.util.conn.ConnectionProvider"%>
+<%@page import="com.util.ConnectionProvider"%>
+<%@page import="com.util.ConnectionProvider"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.sql.DataSource"%>
 <%@page import="javax.naming.InitialContext"%>

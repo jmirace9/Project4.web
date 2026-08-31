@@ -15,8 +15,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import com.ohouse.common.handler.CommandHandler;
-import com.ohouse.common.handler.NullHandler;
+import com.ohouse.common.command.CommandHandler;
+import com.ohouse.common.command.NullHandler;
 
 public class DispatcherServlet extends HttpServlet {
 	

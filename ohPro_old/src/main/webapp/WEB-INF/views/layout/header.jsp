@@ -15,13 +15,7 @@
         button { border: none; background: none; cursor: pointer; font-family: inherit; }
         
         /* 컨테이너 최대 너비 지정 */
-        .header-container { 
-        max-width: 1200px; 
-        margin: 0 auto; 
-        padding: 0 24px; 
-        width: 100%; 
-        box-sizing: border-box;
-        }
+        .header-container { max-width: 1440px; margin: 0 auto; padding: 10px 20px; width: 100%; }
 
         /* 1. 최상단 파란 배너 */
         .top-event-banner { background-color: #1496f4; color: white; display: flex; justify-content: center; align-items: center; padding: 20px 0; font-size: 16px; font-weight: 700; position: relative; cursor: pointer; transition: background-color 0.2s; }
@@ -32,7 +26,7 @@
 
         /* 2. 메인 헤더 영역 */
         .header-main-area { background: #fff; border-bottom: 1px solid #EAEDEF; position: sticky; top: 0; z-index: 100; }
-        .header-main-area .header-container { display: flex; justify-content: space-between; align-items: center; height: 76px; }
+        .header-main-area .header-container { display: flex; justify-content: space-between; align-items: center; height: 90px; }
         
         /* 왼쪽 (로고 + 네비게이션) */
         .header-main-left { display: flex; align-items: center; gap: 45px; }
@@ -49,7 +43,7 @@
         .header-main-right { display: flex; align-items: center; gap: 28px; }
         
         /* 통합검색 */
-        .header-search { display: flex; align-items: center; background-color: #F7F9FA; border: 1px solid #DADCE0; border-radius: 24px; padding: 0 18px; width: 280px; height: 46px; transition: border-color 0.2s, background-color 0.2s; }
+        .header-search { display: flex; align-items: center; background-color: #F7F9FA; border: 1px solid #DADCE0; border-radius: 24px; padding: 0 18px; width: 340px; height: 46px; transition: border-color 0.2s, background-color 0.2s; }
         .header-search:focus-within { border-color: #1496f4; background-color: #fff; }
         .search-icon { width: 22px; height: 22px; color: #828C94; }
         .header-search input { border: none; background: transparent; outline: none; width: 100%; font-size: 16px; margin-left: 8px; color: #2F3438; font-weight: 500; }
@@ -96,8 +90,8 @@
                         </svg>
                     </a>
                     <nav class="header-main-nav">
-                        <a href="#">집구경</a>
-                        <a href="#" class="active">쇼핑</a>
+                        <a href="#" class="active">집구경</a>
+                        <a href="#">쇼핑</a>
                         <a href="#">인테리어/생활</a>
                     </nav>
                 </div>
