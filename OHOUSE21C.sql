@@ -28,3 +28,15 @@ JOIN product_option_value pov
     ON po.product_option_id = pov.product_option_id
 WHERE po.product_id = 3898584
 ORDER BY po.product_option_id, pov.option_value_id;
+
+SELECT
+    a.table_name,
+    a.constraint_name,
+    a.r_constraint_name
+FROM user_constraints a
+WHERE a.constraint_type = 'R'
+AND a.r_constraint_name IN (
+    SELECT constraint_name
+    FROM user_constraints
+    WHERE table_name = 'MEMBER'
+);
